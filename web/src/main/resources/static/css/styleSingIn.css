@@ -1,0 +1,19 @@
+.login, .image {
+	min-height: 60vh;
+}
+
+.bg-image {
+	background-image: url('../images/draw2.svg');
+	background-size: cover;
+	background-position: center center;
+}
+
+.bg-image-singin {
+	background-image: url('../images/registro.png');
+	background-size: cover;
+	background-position: center center;
+}
+
+.iconRRSS {
+	color: #232F3E;
+}

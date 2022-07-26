@@ -1,0 +1,98 @@
+<script th:src="@{/js/film.js}"></script>
+<main class="mainBusqueda">
+	<div class="container justify-content-center mb-2">
+		<div class="row">
+			<div class="col-md-12 mb-4 form-group">
+				<h3 class="display-4 mb-5 text-center" th:text="#{alta_nueva_pelicula}" />
+			</div>
+		</div>
+
+		<div th:replace="fragments/messages"></div>	
+		
+		<form id="frmAltaFilm" th:object="${film}" th:action="@{/new-film}"  method="post" enctype="multipart/form-data">
+			<div class="row mt-4">
+				<div class="col-md-4 mb-4 form-group">
+					<input id="title" type="text" th:field="*{title}" th:placeholder="#{titulo}" required aria-describedby="title validationServerTitleFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+					<span id="validationServerTitleFeedback" class="invalid-feedback"  th:if="${#fields.hasErrors('title')}" th:text="#{mensaje_error_film_titulo}" />
+				</div>
+				<div class="col-md-4 mb-4 form-group">
+					<input id="anio" type="text" th:field="*{year}" th:placeholder="#{year}" required aria-describedby="anio validationServerAnioFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+					<span id="validationServerAnioFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('year')}" th:text="#{mensaje_error_film_year}" />
+				</div>
+				
+				<div class="col-md-4 mb-4 form-group">
+					<input id="duracion" type="text" th:field="*{duration}" th:placeholder="#{duracion}" required aria-describedby="duracion validationServerDuracionFeedback"  th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+					<span id="validationServerDuracionFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('duration')}" th:text="#{mensaje_error_film_duracion}" />
+				</div>
+			</div>
+		
+			<div class="row">
+				<div class="col-md-4 mb-4 form-group">
+					<select th:field="*{director}" class="form-select ">
+						<option value="" th:text="#{texto_opcion_defecto_director}" />
+						<option th:each="elemento : ${director}" th:value="${elemento.getId}"><span th:text="${elemento.getName} + ' ' + ${elemento.getSurname}"></span></option>
+					</select>
+					</div>
+					
+				<div class="col-md-4 mb-4 form-group">
+					<select th:field="*{guionistas}" multiple="multiple" class="form-select ">
+						<option value="" th:text="#{texto_opcion_defecto_guionista}" />
+						<option th:each="elemento : ${guionista}" th:value="${elemento.getId}"><span th:text="${elemento.getName} + ' ' + ${elemento.getSurname}"></span></option>
+					</select>
+				</div>
+					
+				<div class="col-md-4 mb-4 form-group">
+					<select th:field="*{actores}" multiple="multiple" class="form-select ">
+						<option value="" th:text="#{texto_opcion_defecto_actor}" />
+						<option th:each="elemento : ${actor}" th:value="${elemento.getId}"><span th:text="${elemento.getName} + ' ' + ${elemento.getSurname}"></span></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 mb-4 form-group">
+					<select th:field="*{musicos}" multiple="multiple" class="form-select ">
+						<option value="" th:text="#{texto_opcion_defecto_musico}" />
+						<option th:each="elemento : ${musico}" th:value="${elemento.getId}"><span th:text="${elemento.getName} + ' ' + ${elemento.getSurname}"></span></option>
+					</select>
+				</div>
+				<div class="col-md-6 mb-4 form-group">
+					<select th:field="*{fotografo}" class="form-select">
+						<option value="" th:text="#{texto_opcion_defecto_fotografo}" />
+						<option th:each="elemento : ${fotografo}" th:value="${elemento.getId}"><span th:text="${elemento.getName} + ' ' + ${elemento.getSurname}"></span></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 mb-4 form-group">
+					<textarea id="sypnosis" th:field="*{sypnosis}" th:placeholder="#{sipnosis}" required aria-describedby="sypnosis validationServerSinopsisFeedback" th:errorclass="is-invalid" class="form-control  border-0 shadow-sm"></textarea>
+					<span id="validationServerSinopsisFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('sypnosis')}" th:text="#{mensaje_error_film_sinopsis}" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title" th:text="#{cartel}"/>
+						<div id="descripcionImagen" class="text-center" style="display: none;">
+							<img src="" class="img-fluid rounded mx-auto d-block" style="max-height: 25%; width: 25%;" id="imagenPrevisualizacion">
+							<p><span id="nombreImagen"></span> <i class="fa-solid fa-circle-xmark" style="color:red;"onclick="eliminarImagen()"></i></p>
+						</div>
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" th:text="#{tab_fichero_sistema}"/>
+							</li>
+						</ul>
+						<div class="tab-content" id="myTabContent">
+							<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+								<input type="file" name="image" accept="image/*" class="form-control-file mt-3" id="exampleFormControlFile1" onchange="seleccionarImagen()">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group text-center mt-3">
+				<button type="button" onclick="altaPelicula()" class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm" th:text="#{btn_registrar_pelicula}" />
+			</div>
+		</form>
+	</div>
+</main>

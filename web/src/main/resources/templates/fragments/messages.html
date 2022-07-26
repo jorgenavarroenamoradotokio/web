@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-lg-12 col-xl-7 mx-auto">
+		<th:block th:if="${msgAcciones != null}">
+			<th:block th:if="${msgAcciones.getMensajes.get('error').size != 0}">
+				<div class="alert alert-danger align-items-center alert-dismissible fade show mt-5 mb-5" role="alert">
+					<p th:each="msg : ${msgAcciones.getMensajes.get('error')}" th:text="${msg}"></p>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			</th:block>
+			<th:block th:if="${msgAcciones.getMensajes.get('correctos').size != 0}">
+				<div class="alert alert-success" role="alert">
+					<p th:each="msg : ${msgAcciones.getMensajes.get('correctos')}" th:text="${msg}"></p>
+				</div>
+			</th:block>
+			<th:block th:if="${msgAcciones.getMensajes.get('advertencia').size != 0}">
+				<div class="alert alert-warning" role="alert">
+					<p th:each="msg : ${msgAcciones.getMensajes.get('advertencia')}" th:text="${msg}"></p>
+				</div>
+			</th:block>
+		</th:block>
+	</div>
+</div>

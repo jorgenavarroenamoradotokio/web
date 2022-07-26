@@ -1,0 +1,124 @@
+<link rel="stylesheet" th:href="@{/css/styleSingIn.css}" />
+<script th:src="@{/js/login.js}"></script>
+
+<th:block th:if="${isAdmin}">
+	<main class="container">
+		<div class="row">
+			<div class="col-lg-12 mx-auto">
+				<h3 class="display-4 mb-5 text-center" th:text="#{registrarse}" />
+				<form id="frmAltaPersona" style="margin: auto" th:action="@{/new-user}" th:object="${user}" method="post">
+					<div th:replace="fragments/messages"></div>
+					
+					<div class="row">
+						<div class="col-md-6 mb-4 form-group">
+							<input id="username" th:field="*{username}" type="text" th:placeholder="#{nombreUsuario}"  aria-describedby="username validationServerUsernameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+							<span id="validationServerUsernameFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:text="#{mensaje_error_registro_usuario}"/>
+						</div>
+						<div class="col-md-6 mb-4 form-group">
+							<input id="password" th:field="*{password}" type="password" th:placeholder="#{password}"  aria-describedby="password validationServerPasswordFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+							<span id="validationServerPasswordFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:text="#{mensaje_error_registro_password}"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 mb-4 form-group">
+							<input id="name" th:field="*{name}" type="text" th:placeholder="#{nombre}"  aria-describedby="name validationServerNameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4"> 
+							<span id="validationServerNameFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:text="#{mensaje_error_registro_nombre}"  />
+						</div>
+						<div class="col-md-6 mb-4 form-group">
+							<input id="surname" th:field="*{surname}" type="text" th:placeholder="#{apellido}" aria-describedby="surname validationServerSurnameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4"> 
+							<span id="validationServerSurnameFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('surname')}"  th:text="#{mensaje_error_registro_apellido}"/>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6 form-group mb-4">
+							<input id="email" type="text" th:field="*{email}" th:placeholder="#{email}"  aria-describedby="email validationServerEmailFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+							<span id="validationServerEmailFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:text="#{mensaje_error_registro_email}"/>
+						</div>
+						<div class="col-md-6 mb-4 form-group">
+							<input id="birthDate" type="date" th:field="*{birthDate}"  aria-describedby="date validationServerDateFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+							<span  th:text="#{birthDay}"/>
+							<span id="validationServerDateFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('birthDate')}" th:text="#{mensaje_error_registro_date}"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 mb-4 form-group">
+							<select id="rol" name="rol"  aria-describedby="rol validationServerRolFeedback" th:errorclass="is-invalid"  class="form-select rounded-pill border-0 shadow-sm px-4" >
+								<option  value="" th:text="#{perfil_usuario}"/>
+								<option th:each="elemento : ${roles}"  th:value="${elemento.getId}"><span th:text="${elemento.getName}"/></option>
+							</select>
+							<span id="validationServerRolFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('rol')}" th:text="#{mensaje_error_registro_rol}" />
+						</div>
+					</div>
+					
+					<div class="form-group text-center mb-3">
+						<button type="button" th:onclick="'javascript:enviarAlta(' + ${userConectado} + ')'" class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm" th:text="#{registrarse}"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+</th:block>
+<th:block th:if="${!isAdmin}">
+	<main class="container">
+		<div class="card mt-3">
+			<div class="row no-gutter">
+				<!-- mitad izq contiene la imagen -->
+				<div class="col-md-4 d-none d-md-flex bg-image-singin"></div>
+	
+				<!-- mitad derecha contiene el login -->
+				<div class="col-md-8 bg-light">
+					<div class="login d-flex align-items-center py-3">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-12 mx-auto">
+									<h3 class="display-4 mb-5 text-center" th:text="#{registrarse}" />
+									<form id="frmAltaPersona" style="margin: auto" th:action="@{/new-user}" th:object="${user}" method="post">
+										<input type="hidden" id="rolHidden" name="rolHidden"  th:value="${rol}">
+										<div th:replace="fragments/messages"></div>
+										
+										<div class="row">
+											<div class="col-md-6 mb-4 form-group">
+												<input id="username" th:field="*{username}" type="text" th:placeholder="#{nombreUsuario}"  aria-describedby="username validationServerUsernameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+												<span id="validationServerUsernameFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:text="#{mensaje_error_registro_usuario}"/>
+											</div>
+											<div class="col-md-6 mb-4 form-group">
+												<input id="password" th:field="*{password}" type="password" th:placeholder="#{password}"  aria-describedby="password validationServerPasswordFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+												<span id="validationServerPasswordFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:text="#{mensaje_error_registro_password}"/>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 mb-4 form-group">
+												<input id="name" th:field="*{name}" type="text" th:placeholder="#{nombre}"  aria-describedby="name validationServerNameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4"> 
+												<span id="validationServerNameFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:text="#{mensaje_error_registro_nombre}"  />
+											</div>
+											<div class="col-md-6 mb-4 form-group">
+												<input id="surname" th:field="*{surname}" type="text" th:placeholder="#{apellido}" aria-describedby="surname validationServerSurnameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4"> 
+												<span id="validationServerSurnameFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('surname')}"  th:text="#{mensaje_error_registro_apellido}"/>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-6 form-group mb-4">
+												<input id="email" type="text" th:field="*{email}" th:placeholder="#{email}"  aria-describedby="email validationServerEmailFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+												<span id="validationServerEmailFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:text="#{mensaje_error_registro_email}"/>
+											</div>
+											<div class="col-md-6 mb-4 form-group">
+												<input id="birthDate" type="date" th:field="*{birthDate}"  aria-describedby="date validationServerDateFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+												<span  th:text="#{birthDay}"/>
+												<span id="validationServerDateFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('birthDate')}" th:text="#{mensaje_error_registro_date}"/>
+											</div>
+										</div>
+										<div class="form-group text-center mb-3">
+											<button type="button" th:onclick="'javascript:enviarAlta(' + ${userConectado} + ')'"  class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm" th:text="#{registrarse}"/>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</th:block>

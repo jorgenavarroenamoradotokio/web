@@ -1,0 +1,47 @@
+<link rel="stylesheet" th:href="@{/css/styleSingIn.css}" />
+<script th:src="@{/js/login.js}"></script>
+
+<main class="container">
+	<div class="card mt-3">
+		<div class="row no-gutter">
+			<!-- mitad izq contiene la imagen -->
+			<div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+			<!-- mitad derecha contiene el login -->
+			<div class="col-md-6 bg-light">
+				<div class="login d-flex align-items-center py-3">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-10 col-xl-7 mx-auto">
+								<h3 class="display-4 mb-5 text-center" th:text="#{iniciar_sesion}"/>
+							</div>
+						</div>
+						<div th:replace="fragments/messages"></div>
+						<p th:text="${param.error}"/>
+						<div class="row">
+							<div class="col-lg-10 col-xl-7 mx-auto">
+								<form id="frmLogin"  th:action="@{/login}" th:object="${user}" method="post">
+									<div class="form-group mb-3">
+										<input id="username" th:field="*{username}" type="text" th:placeholder="#{nombreUsuario}" required aria-describedby="username validationServerUsernameFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4">
+										<span id="validationServerUsernameFeedback" th:if="${#fields.hasErrors('username')}" class="invalid-feedback" th:text="#{mensaje_error_login_usuario}"/>
+									</div>
+									<div class="form-group mb-3">
+										<input id="password" th:field="*{password}" type="password" th:placeholder="#{password}" required aria-describedby="password validationServerPasswordFeedback" th:errorclass="is-invalid" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+										<span id="validationServerPasswordFeedback" th:if="${#fields.hasErrors('password')}" class="invalid-feedback" th:text="#{mensaje_error_login_password}"/>
+									</div>
+									<div class="form-group text-center mb-3">
+										<button type="button" onclick="validarLogin()" class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm" th:text="#{iniciar_sesion}"/>
+									</div>
+									<p> 
+										<span class="font-italic text-muted" style="color: #393f81;" th:text="#{texto_sin_cuenta}"/>
+										<a th:href="@{/new-user}" style="color: #393f81;" th:text="#{texto_sin_cuenta_registrarse}"/>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>

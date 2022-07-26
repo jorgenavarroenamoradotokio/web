@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head(title='Filmotokio')"></head>
+
+<body class="d-flex flex-column min-vh-100">
+	<nav th:replace="fragments/header"></nav>
+	<nav th:replace="fragments/headerResponse"></nav>
+	
+	<th:block th:if="${plantilla}">
+		<main th:replace="${plantilla}"></main>
+	</th:block>
+	<footer th:replace="fragments/footer"></footer>
+</body>
+
+<script>
+	let screenMedia = 1280;
+
+	$(document).ready(function() {
+		if ($(window).width() < screenMedia) {
+			console.log("pantalla pequeña");
+			$(menuResponse).show();
+			$(menu).hide();
+		} else {
+			$(menuResponse).hide();
+			$(menu).show();
+		}
+		console.log($(window).width());
+	});
+
+	$(window).resize(function() {
+		if ($(window).width() < screenMedia) {
+			console.log("pantalla pequeña");
+			$(menuResponse).show();
+			$(menu).hide();
+		} else {
+			$(menuResponse).hide();
+			$(menu).show();
+		}
+		console.log("resize: " + $(window).width());
+	});
+</script>

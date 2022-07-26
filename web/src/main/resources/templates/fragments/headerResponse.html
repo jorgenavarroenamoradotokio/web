@@ -1,0 +1,34 @@
+<nav id="menuResponse" class="menu">
+	<div class="contenedor contenedor-enlaces-nav">
+		<div class="enlaces">
+			<i class="fa-solid fa-bars" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" style="color: #fff;"></i>
+			<a class="btn-home" style="margin-left: 10px;" th:href="@{/}"><span th:text="#{home}"/></a>
+		</div>
+		
+		<div th:if="${(session.bearerToken == null)}" class="enlaces">
+			<a th:href="@{/login}"><span th:text="#{identificarse}"/> <i class="fa-solid fa-user"></i></a>
+		</div>
+		<div th:if="${(session.bearerToken != null)}" class="enlaces">
+			<a th:href="@{/}"><span th:text="${session.username}"/> <i class="fa-solid fa-user"></i></a>
+			<a th:href="@{/logout}"><span>Cerrar sesion</span> <i class="fa-solid fa-door-closed"></i></a>
+		</div>
+	</div>
+	
+	<!-- Contenido de off canvas  -->
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+		<div class="cabeceraCanvas offcanvas-header enlaces">
+			<h5 th:if="${(session.bearerToken == null)}" class="offcanvas-title titulo"><a th:href="@{/login}"><i class="fa-solid fa-user"></i> <span th:text="#{mensaje_identificarse}"/></a></h5>
+			<h5 th:if="${(session.bearerToken != null)}" class="offcanvas-title titulo"><span th:text="${session.username}"/><i class="fa-solid fa-user"></i></h5>
+			<i data-bs-dismiss="offcanvas" class="fa-solid fa-xmark"  style="color: #fff; padding: 10px"></i>
+		</div>
+		<div class="offcanvas-body">
+			<ul class="menu-lista">
+				<li><a th:href="@{/}"><i class="fa-solid fa-home"></i> <span th:text="#{home}"/></a></li>
+				<li><a th:href="@{/search}"><span th:text="#{buscarPelicula}"/></a></li>
+				<li th:if="${(session.rolUsername == 'ADMIN')}"><a th:href="@{/new-film}"><span th:text="#{nuevaPelicula}"/></a></li>
+				<li th:if="${(session.rolUsername == 'ADMIN')}"><a th:href="@{/new-person}"><span th:text="#{crearPersona}"/></a></li>
+				<li th:if="${(session.rolUsername == 'ADMIN')}"><a th:href="@{/new-user}"><span th:text="#{crearUsuario}"/></a></li>
+			</ul>
+		</div>
+	</div>
+</nav>

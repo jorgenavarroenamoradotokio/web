@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg menu" id="menu">
+	<div class="contenedor contenedor-enlaces-nav">
+		<div class="enlaces">
+			<a class="btn-home" th:href="@{/}"><span th:text="#{home}"/></a>
+			<a th:href="@{/search}"><span th:text="#{buscarPelicula}"/></a> 
+			
+			<a th:if="${(session.rolUsername == 'ADMIN')}" th:href="@{/new-film}"><span th:text="#{nuevaPelicula}"/></a>
+			<a th:if="${(session.rolUsername == 'ADMIN')}" th:href="@{/new-person}"><span th:text="#{crearPersona}"/></a>
+			<a th:if="${(session.rolUsername == 'ADMIN')}" th:href="@{/new-user}"><span th:text="#{crearUsuario}"/></a>
+		</div>
+		
+		<div th:if="${(session.bearerToken == null)}" class="enlaces">
+			<a th:href="@{/login}"><span th:text="#{identificarse}"/> <i class="fa-solid fa-user"></i></a>
+		</div>
+		
+		<div th:if="${(session.bearerToken != null)}" class="enlaces">
+			<a th:href="@{/}"><span th:text="${session.username}"/> <i class="fa-solid fa-user"></i></a>
+			<a th:href="@{/logout}"><span>Cerrar sesion</span> <i class="fa-solid fa-door-closed"></i></a>
+		</div>
+	</div>
+</nav>
